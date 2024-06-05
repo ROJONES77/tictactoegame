@@ -1,17 +1,193 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2299.77">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    span.s1 {font-kerning: none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .board {
+        border-collapse: collapse;
+    }
+    .board td {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .board td.X {
+        color: red;
+    }
+    .board td.O {
+        color: blue;
+    }
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt; &lt;html lang="en"&gt; &lt;head&gt; &lt;meta charset="UTF-8"&gt; &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt; &lt;title&gt;Tic Tac Toe&lt;/title&gt; &lt;style&gt; body { font-family: Arial, sans-serif; } .container { display: flex; justify-content: center; align-items: center; height: 100vh; } .board { border-collapse: collapse; } .board td { width: 100px; height: 100px; border: 1px solid black; text-align: center; font-size: 24px; cursor: pointer; } &lt;/style&gt; &lt;/head&gt; &lt;body&gt; &lt;div class="container"&gt; &lt;table class="board"&gt; &lt;tr&gt; &lt;td onclick="placeMark(0, 0)"&gt;&lt;/td&gt; &lt;td onclick="placeMark(0, 1)"&gt;&lt;/td&gt; &lt;td onclick="placeMark(0, 2)"&gt;&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td onclick="placeMark(1, 0)"&gt;&lt;/td&gt; &lt;td onclick="placeMark(1, 1)"&gt;&lt;/td&gt; &lt;td onclick="placeMark(1, 2)"&gt;&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td onclick="placeMark(2, 0)"&gt;&lt;/td&gt; &lt;td onclick="placeMark(2, 1)"&gt;&lt;/td&gt; &lt;td onclick="placeMark(2, 2)"&gt;&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;/div&gt; &lt;script&gt; let currentPlayer = 'X'; let board = [ ['', '', ''], ['', '', ''], ['', '', ''] ]; function placeMark(row, col) { if (board[row][col] === '') { board[row][col] = currentPlayer; renderBoard(); if (checkWinner()) { alert(currentPlayer + ' wins!'); resetGame(); } else if (checkDraw()) { alert('It\'s a draw!'); resetGame(); } else { currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; } } } function renderBoard() { const cells = document.querySelectorAll('.board td'); cells.forEach((cell, index) =&gt; { const row = Math.floor(index / 3); const col = index % 3; cell.textContent = board[row][col]; }); } function checkWinner() { for (let i = 0; i &lt; 3; i++) { if (board[i][0] === board[i][1] &amp;&amp; board[i][1] === board[i][2] &amp;&amp; board[i][0] !== '') { return true; } if (board[0][i] === board[1][i] &amp;&amp; board[1][i] === board[2][i] &amp;&amp; board[0][i] !== '') { return true; } } if (board[0][0] === board[1][1] &amp;&amp; board[1][1] === board[2][2] &amp;&amp; board[0][0] !== '') { return true; } if (board[0][2] === board[1][1] &amp;&amp; board[1][1] === board[2][0] &amp;&amp; board[0][2] !== '') { return true; } return false; } function checkDraw() { for (let i = 0; i &lt; 3; i++) { for (let j = 0; j &lt; 3; j++) { if (board[i][j] === '') { return false; } } } return true; } function resetGame() { currentPlayer = 'X'; board = [ ['', '', ''], ['', '', ''], ['', '', ''] ]; renderBoard(); } &lt;/script&gt; &lt;/body&gt; &lt;/html&gt;</span></p>
+
+<div class="container">
+    <table class="board">
+        <tr>
+            <td onclick="placeMark(0, 0)"></td>
+            <td onclick="placeMark(0, 1)"></td>
+            <td onclick="placeMark(0, 2)"></td>
+        </tr>
+        <tr>
+            <td onclick="placeMark(1, 0)"></td>
+            <td onclick="placeMark(1, 1)"></td>
+            <td onclick="placeMark(1, 2)"></td>
+        </tr>
+        <tr>
+            <td onclick="placeMark(2, 0)"></td>
+            <td onclick="placeMark(2, 1)"></td>
+            <td onclick="placeMark(2, 2)"></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    let currentPlayer = 'X';
+    let board = [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
+    ];
+
+    function placeMark(row, col) {
+        if (board[row][col] === '' && !checkWinner() && !checkDraw()) {
+            board[row][col] = currentPlayer;
+            renderBoard();
+            if (checkWinner()) {
+                alert(currentPlayer + ' wins!');
+                resetGame();
+            } else if (checkDraw()) {
+                alert('It\'s a draw!');
+                resetGame();
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                if (currentPlayer === 'O') {
+                    // AI player's turn
+                    let bestMove = getBestMove();
+                    placeMark(bestMove.row, bestMove.col);
+                }
+            }
+        }
+    }
+
+    function renderBoard() {
+        const cells = document.querySelectorAll('.board td');
+        cells.forEach((cell, index) => {
+            const row = Math.floor(index / 3);
+            const col = index % 3;
+            cell.textContent = board[row][col];
+            cell.className = board[row][col]; // Add class for styling
+        });
+    }
+
+    function checkWinner() {
+        for (let i = 0; i < 3; i++) {
+            if (board[i][0] === board[i][1] && board[i][1] === board[i][2] && board[i][0] !== '') {
+                return true;
+            }
+            if (board[0][i] === board[1][i] && board[1][i] === board[2][i] && board[0][i] !== '') {
+                return true;
+            }
+        }
+        if (board[0][0] === board[1][1] && board[1][1] === board[2][2] && board[0][0] !== '') {
+            return true;
+        }
+        if (board[0][2] === board[1][1] && board[1][1] === board[2][0] && board[0][2] !== '') {
+            return true;
+        }
+        return false;
+    }
+
+    function checkDraw() {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function resetGame() {
+        currentPlayer = 'X';
+        board = [
+            ['', '', ''],
+            ['', '', ''],
+            ['', '', '']
+        ];
+        renderBoard();
+    }
+
+    function getBestMove() {
+        let bestScore = -Infinity;
+        let move;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') {
+                    board[i][j] = 'O';
+                    let score = minimax(board, 0, false);
+                    board[i][j] = '';
+                    if (score > bestScore) {
+                        bestScore = score;
+                        move = { row: i, col: j };
+                    }
+                }
+            }
+        }
+        return move;
+    }
+
+    function minimax(board, depth, isMaximizing) {
+        if (checkWinner()) {
+            return isMaximizing ? -10 + depth : 10 - depth;
+        } else if (checkDraw()) {
+            return 0;
+        }
+
+        if (isMaximizing) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (board[i][j] === '') {
+                        board[i][j] = 'O';
+                        let score = minimax(board, depth + 1, false);
+                        board[i][j] = '';
+                        bestScore = Math.max(score, bestScore);
+                    }
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (board[i][j] === '') {
+                        board[i][j] = 'X';
+                        let score = minimax(board, depth + 1, true);
+                        board[i][j] = '';
+                        bestScore = Math.min(score, bestScore);
+                    }
+                }
+            }
+            return bestScore;
+        }
+    }
+</script>
+
 </body>
 </html>
